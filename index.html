@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Jeroen de Lang</a>
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-home"></span> Jeroen de Lang</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -48,8 +48,29 @@
     <div class="container" ng-app="" ng-controller="gameController">
         <div class="jumbotron">
             <h1>Hangman</h1>
-            <h2>{{word}}</h2>
-            <p>{{ result }}</p>
+            <div ng-show="gameInProgress">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>{{word}}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-md-2">
+                        <div class="form-group">
+                            <label for="guess">Try:</label>
+                            <input type="text" class="form-control" id="guess" pattern="[A-Za-z]{1}" autofocus="autofocus" maxlength="1" ng-bind="guess" ng-change="guessLetter()">
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-10">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-{{progressType}} progress-bar-striped active" role="progressbar"
+                                 aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                                {{percentage}}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <h1>Hangman game</h1>
         <p>
