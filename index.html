@@ -45,7 +45,7 @@
     <link href="css/hangman.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container" ng-app="" ng-controller="gameController">
+    <div class="container" ng-app="hangmanApp" ng-controller="gameController">
         <div class="jumbotron">
             <h1>Hangman</h1>
             <div ng-show="gameInProgress">
@@ -55,16 +55,17 @@
                     </div>
                 </div>
                 <div class="row">
+                    <h2>{{ guesses }}</h2>
                     <div class="col-sm-4 col-md-2">
                         <div class="form-group">
                             <label for="guess">Try:</label>
-                            <input type="text" class="form-control" id="guess" pattern="[A-Za-z]{1}" autofocus="autofocus" maxlength="1" ng-bind="guess" ng-change="guessLetter()">
+                            <input type="text" class="form-control" id="guess" pattern="[A-Za-z]{1}" autofocus="autofocus" maxlength="1" ng-model="guess" ng-change="guessLetter()">
                         </div>
                     </div>
                     <div class="col-sm-8 col-md-10">
                         <div class="progress">
                             <div class="progress-bar progress-bar-{{progressType}} progress-bar-striped active" role="progressbar"
-                                 aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                                 aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:{{percentage}}%">
                                 {{percentage}}%
                             </div>
                         </div>
