@@ -7,6 +7,20 @@ app.controller("gameController", function ($scope, $http) {
     $scope.guesses = "";
     $scope.tries = 11;
     $scope.percentage = 0;
+    $scope.progressType = "success";
+
+    $scope.$watch("percentage", function (newValue, oldValue) {
+        console.log("Watch function called: " + $scope.percentage);
+        if ($scope.percentage < 40) {
+            $scope.progressType = "success";
+        } else if ($scope.percentage < 50) {
+            $scope.progressType = "info";
+        } else if ($scope.percentage < 60) {
+            $scope.progressType = "warning";
+        } else {
+            $scope.progressType = "danger";
+        }
+    });
 
     $scope.guessLetter = function () {
         // Het teken dat geraden moet worden in kleine letters zetten en eventuele spaties verwijderen
@@ -23,6 +37,10 @@ app.controller("gameController", function ($scope, $http) {
             } else {
                 // Letter komt niet voor, aantal resterende pogingen verminderen
                 $scope.tries--;
+                if ($scope.tries == 0) {
+                    $scope.gameInProgress = false;
+                    $scope.word = $scope.word + " (solution: " + $scope.solution + ").";
+                }
                 console.log("Komt niet voor, " + $scope.tries + " pogingen over.");
                 $scope.percentage = Math.round(100 - ($scope.tries / 11 * 100));
             }
@@ -37,16 +55,24 @@ app.controller("gameController", function ($scope, $http) {
 
         for (i = 0; i < $scope.solution.length; i++) {
             if ($scope.guesses.indexOf($scope.solution.charAt(i)) != -1) {
-                $scope.word = $scope.word + $scope.solution.charAt(i);                
+                $scope.word = $scope.word + $scope.solution.charAt(i);
             } else {
                 $scope.word = $scope.word + ".";
             }
         }
+        if ($scope.word.indexOf(".") === -1) {
+            $scope.gameInProgress = false;
+        }
 
     }
-    function newGame() {
+    $scope.startGame = function () {
         console.log("Start a new game");
-        $http.get("/hangman/scripts/php/word.php")
+        $scope.guess = "";
+        $scope.guesses = "";
+        $scope.tries = 11;
+        $scope.percentage = 0;
+        $scope.progressType = "success";
+        $http.get("scripts/php/word.php")
             .success(function (data, status, headers, config) {
                 console.log("Got a word from the webservice, status: " + status);
                 $scope.result = data;
@@ -57,8 +83,6 @@ app.controller("gameController", function ($scope, $http) {
             .error(function (data, status, headers, config) {
                 console.log("Error getting a word from the webservice, status: " + status);
             });
-        $scope.progressType = "success";
         $scope.percentage = 0;
     }
-    newGame();
 });

@@ -1,30 +1,4 @@
-﻿<!DOCTYPE html>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-home"></span> Jeroen de Lang</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Game <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">New</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+﻿<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Hangman</title>
@@ -44,26 +18,66 @@
     <!-- Hangman Style -->
     <link href="css/hangman.css" rel="stylesheet" />
 </head>
-<body>
-    <div class="container" ng-app="hangmanApp" ng-controller="gameController">
+<body ng-app="hangmanApp" ng-controller="gameController">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.jeroendelang.nl"><span class="glyphicon glyphicon-home"></span> Jeroen de Lang</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Game <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" ng-click="startGame()">New</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
         <div class="jumbotron">
-            <h1>Hangman</h1>
-            <div ng-show="gameInProgress">
+            <div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h2>{{word}}</h2>
+                        <h1>{{word}}</h1>
                     </div>
                 </div>
                 <div class="row">
-                    <h2>{{ guesses }}</h2>
+                    <div class="col-sm-12 col-md-12">
+                        <h2>{{ guesses }}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <span ng-show="gameInProgress"><h2>Number of tries left: {{ tries }}</h2></span>
+                        <span ng-show="!gameInProgress"><button ng-click="startGame()">Start a new game</button></span>
+                    </div>
+                </div>
+                <div class="row" ng-show="gameInProgress">
                     <div class="col-sm-4 col-md-2">
                         <div class="form-group">
                             <label for="guess">Try:</label>
-                            <input type="text" class="form-control" id="guess" pattern="[A-Za-z]{1}" autofocus="autofocus" maxlength="1" ng-model="guess" ng-change="guessLetter()">
+                            <input type="text" class="form-control" id="guess" pattern="[A-Za-z]{1}" autofocus="autofocus" maxlength="1" ng-model="guess" ng-change="guessLetter()" ng-focus="gameInProgress">
                         </div>
                     </div>
                     <div class="col-sm-8 col-md-10">
-                        <div class="progress">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 colmd-12">
+                        <div class="progress" ng-show="gameInProgress">
                             <div class="progress-bar progress-bar-{{progressType}} progress-bar-striped active" role="progressbar"
                                  aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:{{percentage}}%">
                                 {{percentage}}%
@@ -77,12 +91,10 @@
         <p>
             This version of the classic hangman game was written by Jeroen de Lang using HTML5, CSS3, Bootstrap, AngularJS and PHP to show coding skills. Enjoy!
         </p>
+        <p>
+            <a href="http://nl.linkedin.com/in/jeroendelang"><img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_viewmy_160x25.png" width="160" height="25" border="0" alt="View Jeroen de Lang's profile on LinkedIn"></a>
+        </p>
     </div>
 </body>
 </html>
-<footer>
-    <p>
-        <a href="http://nl.linkedin.com/in/jeroendelang"><img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_viewmy_160x25.png" width="160" height="25" border="0" alt="View Jeroen de Lang's profile on LinkedIn"></a>
-    </p>
-</footer>
 <script src="scripts/js/gameController.js"></script>
